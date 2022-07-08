@@ -34,7 +34,6 @@ jobs:
       - snyk/scan:
           fail-on-issues: false
           monitor-on-build: false
-          
   build_docker_image:
     machine:
       image: ubuntu-2004:202101-01
@@ -48,7 +47,6 @@ jobs:
       - docker/push:
           image: $DOCKER_LOGIN/$CIRCLE_PROJECT_REPONAME
           tag: 0.1.<< pipeline.number >>
-
   deploy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
@@ -81,7 +79,6 @@ jobs:
           paths:
             - "*"      
       - run: sleep 90
-      
   smoketest_deployment:
     machine:
       image: ubuntu-2004:202101-01
@@ -95,7 +92,6 @@ jobs:
           command: |
             source /tmp/ecs/endpoint
             ./test/smoke_test $ENDPOINT
-            
   destroy_aws_ecs:
     machine:
       image: ubuntu-2004:202101-01
@@ -115,7 +111,6 @@ jobs:
           path: ./terraform/ecs
       - terraform/destroy:
           path: ./terraform/ecs
-
 workflows:
   build:
     jobs:
