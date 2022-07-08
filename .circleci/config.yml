@@ -14,3 +14,13 @@ jobs:
       - node/install-packages:
           override-ci-command: npm install
           cache-path: ~/project/node_modules
+      - run:
+          name: Run Unit Tests
+          command: |
+            ./node_modules/mocha/bin/mocha test/ --reporter mocha-junit-reporter --reporter-options mochaFile=./test/test-results.xml
+            ./node_modules/mocha/bin/mocha test/ --reporter mochawesome --reporter-options reportDir=test-results,reportFilename=test-results
+      - store_test_results:
+          path: test/
+      - store_artifacts:
+          path: test-results
+    
